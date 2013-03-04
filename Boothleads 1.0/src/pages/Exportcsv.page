@@ -1,0 +1,5 @@
+<apex:page contentType="application/csv#AttendeeTemplate.csv" cache="true" showheader="fase" language="en-US" controller="QRCode_ExtendsDataImportCon">
+
+    <apex:outputText value="Prefix,First Name,Last Name,Sufix,Email Id,Company Name,Designation,HomePhone Number,Mobile Number,Work Phone Number,Work Fax Number,Age,Gender,Date Of Birth,Home Address1,Home Address2,Home City,Home state,Home ZipCode,Work Address1,Work Address2,Work City,Work State,Work ZipCode,Shipping Address1,Shipping Address2,Shipping City,Shipping State,Shipping ZipCode,Primary Business Category,Secondary Business Category,No Of Employes,Business Establish Date,Business Revenue,Business TaxId,Business DnB Id,WebSite URL,Blog URL,Diversity Type,Business Description,NAICS Code 1,NAICS Code 2,NAICS Code 3"/>
+  
+</apex:page>

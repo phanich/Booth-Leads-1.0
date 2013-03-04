@@ -1,0 +1,18 @@
+<apex:page showHeader="false" sidebar="false">
+<!--<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/screen.css")}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/pro_dropline_ie.css")}"/>
+
+
+<apex:includeScript value="{!$Resource.QRDateTimePickerjs2}"/>
+
+<apex:includeScript value="{!$Resource.DateTime}"/>-->
+
+  <div id="footer">
+    <!--  start footer-left -->
+    <div id="footer-left">&copy; Copyright Globalnest LLC. <span id="spanYear"></span> 
+    <a href="">www.globalnest.com</a>. All rights reserved.</div>
+    <!--  end footer-left -->
+    <div class="clear">&nbsp;</div>
+</div>
+</apex:page>

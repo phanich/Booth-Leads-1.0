@@ -1,0 +1,755 @@
+<apex:page controller="QRcode_BoothAdminImportNewCon" sidebar="false" showHeader="false" standardStylesheets="True" action="{!checkUserId}">
+
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/screen.css")}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/pro_dropline_ie.css")}"/>
+
+<style>
+    .header{
+        background-color:#CCCCCC;
+        height:35px;
+        width:25%;
+        color:#000000;
+        padding-left:10px;
+    }
+
+    .roundedcorner{
+        -moz-border-radius-bottomleft:6px; 
+        -webkit-border-bottom-left-radius:6px; 
+        -moz-border-radius-bottomright:6px; 
+        -webkit-border-bottom-right-radius:6px; 
+        border-radius:0 0 6px 6px; 
+       /* -moz-box-shadow:0 0 45px #CCCCCC; 
+        -webkit-box-shadow:0 0 45px #CCCCCC; 
+        box-shadow:0 0 45px #CCCCCC;
+        background-color:#F3F3F3;*/
+        background: #336699; /* for non-css3 browsers */
+        background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#f3f3f3));
+        background: -moz-linear-gradient(top, #cccccc, #f3f3f3);
+        background-image: -o-linear-gradient(top, #cccccc, #f3f3f3);
+        background-image: -ms-linear-gradient(top, #cccccc, #f3f3f3);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#f3f3f3');
+    }
+
+</style>
+
+
+<!--<apex:includeScript value="{!$Resource.QRDateTimePickerjs2}"/>-->
+
+<apex:includeScript value="{!$Resource.DateTime}"/>
+
+    <script language="JavaScript">
+  /** function showModalWindow()
+   {
+    var ecsvWin = 
+
+window.showModalDialog("/apex/Exportcsv","","dialogWidth:1px;dialogHeight:1px; center:yes");
+         
+           
+          ecsvWin.close(); 
+      
+   }**/
+   
+   function validateImportFields()
+   {
+      
+       var lvFnId = document.getElementById('j_id0:fo:j_id50:0:sel');
+       var lvLnId = document.getElementById('j_id0:fo:j_id50:1:sel');
+       var lvEmId = document.getElementById('j_id0:fo:j_id50:2:sel');
+       var lvOnId = document.getElementById('j_id0:fo:j_id50:4:sel');
+       
+    
+       
+       lvFnId.value=lvFnId.value.trim();
+       lvOnId.value=lvOnId.value.trim();
+       lvLnId.value=lvLnId.value.trim();
+       lvEmId.value=lvEmId.value.trim();
+       
+     
+       
+    if(lvFnId.value == "NONE"   )
+    {
+        alert("Please select First Name");
+        return false;
+    }
+     
+    if(lvLnId.value == "NONE"   )
+    {
+        alert("Please select Last Name");
+        return false;
+    }
+    if(lvEmId.value == "NONE"   )
+    {
+        alert("Please select Email ID");
+        return false;
+    } 
+    
+    if(lvOnId.value == "NONE"   )
+    {
+        alert("Please select Organization Name");
+        return false;
+    }    
+
+   }
+    var RollBackBool;
+    function ValidateRollback()
+    {
+    
+         var r= confirm('Are you sure want to RollBalck Import');
+         if (r==true)
+          {
+              rollBackBool = true;
+              return true;
+              
+          }
+        else
+          {
+             rollBackBool =false;
+             return false;
+          }
+    
+    }
+   
+   
+  </script>
+
+
+
+
+
+
+
+<!-- <apex:stylesheet value="{!URLFOR($Resource.phani2,"css/screen.css")}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/pro_dropline_ie.css")}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/datePicker.css")}"/>
+-->
+
+
+<apex:form id="fo">
+
+<!-- Start: page-top-outer -->
+<div id="page-top-outer">    
+
+<!-- Start: page-top -->
+<div id="page-top">
+
+    <!-- start logo -->
+    <div id="logo">
+    <a href="#">
+      
+      
+     <!-- <img 
+
+src="{!URLFOR($Resource.GlobalnestPortal_Cssall,"css/images/shared/logo.png")}"/> -->
+     </a>
+    </div>
+    <!-- end logo -->
+         
+    <!--  start top-search -->
+    <div id="top-search">
+     
+        <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            
+        
+        <td Class="welcome">
+        
+        <b><font>Welcome : </font>
+                   <font size="2" color="sky blue">{!$User.Firstname}&nbsp;{!$User.Lastname} </font></b>
+        
+      <!--  <apex:inputText value="{!searchstr}" 
+
+styleClass="top-search-inp" />  </td>
+        
+        <td>
+        
+       <apex:commandButton action="{!search}" value="search" image="{!URLFOR($Resource.GlobalnestPortal_Cssall,"css/images/shared/top_search_btn.gif")}"/> -->
+       
+        </td>
+        </tr>
+        </table>
+    </div>
+    <!--  end top-search -->
+    <div class="clear"></div>
+
+</div>
+<!-- End: page-top -->
+
+</div>
+<!-- End: page-top-outer -->
+    
+<div class="clear">&nbsp;</div>
+ 
+<!--  start 
+
+nav-outer-repeat.........................................................
+
+........................................ START -->
+<div class="nav-outer-repeat"> 
+<!--  start nav-outer -->
+<div class="nav-outer"> 
+
+<!-- Start Nav Right-->
+        <div id="nav-right">
+        
+            <!--<div class="nav-divider">&nbsp;</div>
+            <div class="showhide-account"><img src="images/shared/nav/nav_myaccount.gif" width="93" height="14" alt=""/></div>-->
+            <!--<div class="nav-divider">&nbsp;</div>
+            <a id="logout">
+            
+            <img 
+
+src="{!URLFOR($Resource.GlobalnestPortal_Cssall,"css/images/shared/nav/nav_logout.gif")}"    value="{!$Site.Prefix}/secur/logout.jsp" 
+
+rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">{!$Label.site.logout}</img>
+            
+           </a>-->
+           
+           
+           <!----LOGOUT ACTION -->
+           <div class="nav">
+        <div class="table">
+
+          <div class="nav-divider">&nbsp;</div>
+       <apex:commandLink action="{!ProfileSettings}" style="text-style:bold; color:#FFFFFF; padding:10px 15px 0 0;" value="Profile"/>
+        <div class="nav-divider">&nbsp;</div>
+        <apex:commandLink action="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}" style="text-style:bold; color:#FFFFFF; padding:10px 15px 0 0;">{!$Label.site.logout}</apex:commandLink>
+         <div class="nav-divider">&nbsp;</div>
+       <apex:commandLink style="text-style:bold; color:#FFFFFF; padding:10px 15px 0 0;cursor:help" action="{!Help}" title="Help">Help</apex:commandLink>
+      
+            </div></div>
+           
+           <!----LOGOUT ACTION END--->
+           
+           
+            <div class="clear">&nbsp;</div>
+        
+            <!--  start account-content --> 
+            <div class="account-content">
+            <div class="account-drop-inner">
+                <a href="" id="acc-settings">Settings</a>
+                <div class="clear">&nbsp;</div>
+                <div class="acc-line">&nbsp;</div>
+                <a href="" id="acc-details">Personal details </a>
+                <div class="clear">&nbsp;</div>
+                <div class="acc-line">&nbsp;</div>
+                <a href="" id="acc-project">Project details</a>
+                <div class="clear">&nbsp;</div>
+                <div class="acc-line">&nbsp;</div>
+                <a href="" id="acc-inbox">Inbox</a>
+                <div class="clear">&nbsp;</div>
+                <div class="acc-line">&nbsp;</div>
+                <a href="" id="acc-stats">Statistics</a> 
+            </div>
+            </div>
+            <!--  end account-content -->
+        
+        </div>
+        <!-- end nav-right -->
+
+
+        <!--  start nav -->
+        <div class="nav">
+        <div class="table">
+        
+        <ul class="select"><li>
+        
+        
+      <!--  <apex:commandLink action="{!hometabdirection}"><b>Home</b></apex:commandLink> -->
+        <!-- <a href="index.html"><b>Home</b></a> -->
+       
+        <div class="select_sub">
+            <ul class="sub">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+       
+        </li>
+        </ul>
+        
+       <div class="nav-divider">&nbsp;</div>
+                            
+         <ul class="select"><li>
+        
+         <apex:commandLink action="{!Events}"><b>Events</b></apex:commandLink>
+        <!--[if lte IE 6]><table><tr><td><![endif]-->
+        <div class="select_sub show">
+            <ul class="sub">
+                <li><a href="#"></a></li>
+                <li class="sub_show"><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        </ul>
+        
+        
+        <div class="nav-divider">&nbsp;</div>
+        
+        
+         <ul class="current"><li>
+        <apex:commandLink action="{!CustomerAdminAct}" ><b>Booths</b> </apex:commandLink>
+      
+        <div class="select_sub">
+            <ul class="sub">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#nogo"></a></li>
+             
+            </ul>
+        </div>
+       
+        </li>
+        </ul>
+        
+        
+        
+   
+        
+
+
+        <div class="nav-divider">&nbsp;</div>
+        
+       <ul class="select"><li>
+       
+       <apex:commandLink action="{!Attendees}" ><b>Attendees</b> </apex:commandLink>
+        <!--[if lte IE 6]><table><tr><td><![endif]-->
+        <div class="select_sub">
+            <ul class="sub">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        </ul>
+        
+             
+        <div class="nav-divider">&nbsp;</div>
+        
+      <!--  <ul class="current"><li>
+        <apex:commandLink action="{!DataImportAct}" ><b>DataImport</b> </apex:commandLink>
+      
+        <div class="select_sub">
+            <ul class="sub">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#nogo"></a></li>
+             
+            </ul>
+        </div>
+       
+        </li>
+        </ul>
+        
+        
+        
+        <div class="nav-divider">&nbsp;</div>
+        -->
+        <ul class="select"><li>
+        <apex:commandLink action="{!reportact}" ><b>Reports</b> </apex:commandLink>
+       
+        <div class="select_sub">
+            <ul class="sub">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#nogo"></a></li>
+             
+            </ul>
+        </div>
+       
+        </li>
+        </ul>
+        
+       <!-- <div class="nav-divider">&nbsp;</div>
+        
+         <ul class="select">
+             <li>
+                 <apex:commandlink action="{!Dashboardaction}"><b>Dashboard</b></apex:commandlink>
+             </li>
+         </ul>
+        
+        -->
+        
+        
+        <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <!--  start nav -->
+        
+
+</div>
+<div class="clear"></div>
+<!--  start nav-outer -->
+</div>
+<!--  start 
+
+nav-outer-repeat................................................... END -->
+
+ <div class="clear"></div>
+ 
+<!-- start content-outer 
+
+........................................................................................................................START -->
+<div id="content-outer">
+<!-- start content -->
+<div id="content">
+
+    <!--  start page-heading --><div id="page-heading">
+    <table width="100%" >
+         <tr>
+           <td width="170px">  
+                    <h1 style="font-size:20px;padding-right:10px;">Import Booths</h1> </td>
+        
+                <td width="400px">    <H2> <apex:commandLink value="Booths" action="{!CustomerAdminAct}" /></H2>
+                    <H3><apex:outputText value=">"/> 
+                    <apex:OutputText value="  Import Booths" /></H3> </td>
+        
+          <td align="right" style="padding-right:15px;">
+       <!--    <apex:commandButton value="Import History" action="{!ShowPreviousList}" styleClass="awesome" rendered="{!foundHistoryBool}"/>--> </td>
+         </tr>
+        </table> 
+        
+        
+       <!-- <apex:outputtext >Select Event</apex:outputtext>&nbsp;&nbsp;&nbsp; <apex:selectList value="{!singleEvent}" size="1" multiselect="false">
+            <apex:selectOptions value="{!events}"/>
+        </apex:selectList>
+        
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <apex:commandLink Value="Go" action="{!ShowEvent}" styleClass="awesome"/> -->
+    </div>
+    <!-- end page-heading -->
+
+    <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
+    <tr>
+        <th rowspan="3" class="sized">
+        
+        <img src="{!URLFOR($Resource.GlobalnestPortal_Cssall,"css/images/shared/side_shadowleft.jpg")}" width="20" height="100" alt="" /></th>
+        <th class="topleft"></th>
+        <td align="right" valign="middle" id="tbl-border-top">&nbsp;</td>
+        <th class="topright"></th>
+        <th rowspan="3" class="sized">
+        <img src="{!URLFOR($Resource.GlobalnestPortal_Cssall,"css/images/shared/side_shadowright.jpg")}" width="20" height="100" alt="" /></th>
+    </tr>
+    <tr>
+        <td id="tbl-border-left"></td>
+        <td>
+        <!--  start content-table-inner ...................................................................... START -->
+        <div id="content-table-inner"  overflow="scroll" border="1">
+        
+            <!--  start table-content  rendered="{!showselectCSV}"-->
+            <div id="table-content">
+            
+           <!--  -->
+            <apex:outputPanel rendered="{!NOT(showselectCSV)}" >
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" >
+                                <tr>
+                                  <td width="40%" align="left" valign="top" bgcolor="#FFFFFF">
+            
+             <table width="100%" align="left" cellspacing="0" cellpadding="0" class="roundedcorner" >
+                                   
+                                    
+                                    <tr height="200px">
+                                      <td align="center" valign="top" width="40%" style="background-repeat:no-repeat; padding-top:5px; padding-left:0px;"><label for="search"><span style="background-repeat:no-repeat; padding-top:5px; padding-right:75px;">
+                                       <div>
+
+                                        <apex:inputFile value="{!boothimport}" filename="{!boothfile}" /> </div><br />
+                                        
+                                        <apex:commandButton value="Show Mapping" id="theButton" action="{!showMapping}" styleClass="awesome" status="status1"/>
+                                        <apex:actionStatus id="status1">
+                                           <apex:facet name="start">
+                                                   <apex:image Url="{!$Resource.LoadingImage}"/>
+                                             </apex:facet>
+                                      </apex:actionStatus>
+          
+                                      
+                                       
+                                      <br/> <br/>
+                                     <B> 
+                                       <apex:outputText rendered="{!ErrorFilesize}" style="font-Color:#FF0000" value="Please Upload File size bellow than 450KB"> </apex:outputText>
+                                       <apex:outputText rendered="{!noFileChooseBool}" value="Please Upload Valid CSV File"> </apex:outputText>
+                                       </B>                                      
+                                      <br/>
+                                      
+                                     <br/>
+                                       <font color="Black"> 
+                                      <b>Note: Please use a CSV file or the standard template to upload Booth Admins. </B></Font><font color="#FFFF00"> <apex:commandLink value=" Click Here "  action="{!exportToCSV}" title=" Click Here " target="_blank"/></Font><Font color="black"> <B> to download the template. </B> </font>
+                                     
+                                      </span></label></td>
+                                      
+                                    </tr>
+                                    
+                                    
+                                  </table>
+                                </td>
+                                    <td style="padding:15px;" width="60%">
+                                        
+                                         <B> Supported Formats </B><br/>
+                                          You can use csv format to import Booth Admins.<br/>
+                                          <br/>
+                                          <B>Maximum Limits</B><br/>
+                                          File size should be less than 450KB.<br/>
+                                          <br/>
+                                          <B> Important Notes</B><br/>
+                                           <br/>
+                                           <ul>
+                                           
+                                           <li>First row of the given file will be treated as field names.
+                                           </li><li>Mandatory fields are <b>First Name, Last Name, Email Id and Organization Name</b>.
+                                          </li><li>Duplicate check will be performed based on the <b>Email Id</B>.
+                                           </li>
+                                           </ul>
+                                            <br/><br/>
+                                         <font color="#FF0000">*</font>  <b>It is recommended that you test your import with a sample file before you import the actual data.</b><br/>
+                                      
+                                      
+                                      
+                                      </td>
+                                </tr>
+                            </table>
+            
+                           
+           
+            </apex:outputPanel>
+           
+         <!--   -->
+        <apex:outputPanel style="max-width:1024px;" rendered="{!showselectCSV}" >
+            <table align="center" cellpadding="0" cellspacing="0"  width="98%" style="padding-top:10px;  solid #CCCCCC;" >
+                    <tr>
+                        <td width="50%" align="center" valign="top">
+                               <table border="0" align="center" cellpadding="3" cellspacing="2" width="100%" >
+                                   <tr height="30px" style="Font-weight:bold;background-color:#CCCCCC;"><td width="50%" align="right" style="padding-right:5px;"> <apex:outputText value="Booth Admin Fields"></apex:outputText></td>
+                                                  <td width="50%" align="left" style="padding-left:35px;"> <apex:outputText value="CSV File Values"></apex:outputText></td>
+                                   </tr>
+                                   <apex:repeat value="{!leftValues}" var="c"> 
+                                       <tr height="30px">
+                                            <td width="50%" align="right" style="padding-right:5px;" ><B>{!c.DBField1}</B>
+                                                <apex:outputText value="*" style="color:red; font-size:16px" rendered="{!c.DBField1 == 'Last Name'}"></apex:outputText>
+                                                <apex:outputText value="*" style="color:red;  font-size:16px" rendered="{!c.DBField1 == 'Email ID'}"></apex:outputText>
+                                                <apex:outputText value="*" style="color:red;  font-size:16px" rendered="{!c.DBField1 == 'First Name'}"></apex:outputText>
+                                                <apex:outputText value="*" style="color:red;  font-size:16px" rendered="{!c.DBField1 == 'Organization Name'}"></apex:outputText>
+                                                <apex:outputText value=" " style="color:red;  font-size:16px" rendered="{!c.DBField1 == 'Password'}"></apex:outputText>
+                                                
+                                            </td>
+                                            <td width="50%" align="left">
+                                                 <apex:selectList value="{!c.SelectdValue}" multiselect="false" size="1" id="sel">
+                                                  
+                                                  <apex:selectOptions value="{!CSVHeaders}">
+                                                  </apex:selectOptions>
+                                                 </apex:selectList>
+                                            </td>
+                                       </tr>
+                                   </apex:repeat>
+                               </table>
+                        </td>
+                        
+                        <td width="50%" align="center" valign="top">
+                               <table border="0" align="center" cellpadding="3" cellspacing="2" width="100%" >
+                                <tr height="30px" style="Font-weight:bold;background-color:#CCCCCC;"><td align="right" style="padding-right:5px;"> <apex:outputText value="Booth Admin Fields"></apex:outputText></td>
+                                                  <td width="50%" align="left" style="padding-left:35px;"> <apex:outputText value="CSV File Values"></apex:outputText></td>
+                                </tr>
+                                   <apex:repeat value="{!rightValues}" var="c"> 
+                                       <tr height="30px">
+                                            <td width="50%" align="right" style="padding-right:5px;"><B>{!c.DBField2}</B>
+                                                                               
+                                            </td>
+                                            <td width="50%" align="left">
+                                               <apex:selectList value="{!c.SelectdValue2}" multiselect="false" size="1" id="sel">
+                                               <apex:selectOptions value="{!CSVHeaders}">
+                                                  </apex:selectOptions>
+                                                 </apex:selectList>
+                                            </td>
+                                       </tr>
+                                   </apex:repeat>
+                               </table>
+                        </td>
+                  </tr>
+                  <tr><td>&nbsp;</td></tr><!--style="padding-left:350px"-->
+                  <tr colspan="2" ><td colspan="4" align="center">
+                      <apex:commandButton action="{!importBoothAdmins}" value="Insert Booths" styleClass="awesome" onclick="return validateImportFields();"/> 
+                      <apex:commandButton action="{!cancelInSelect}" value="Cancel" styleClass="awesome" />     
+                  </td></tr>
+                  </table>  
+
+        </apex:outputPanel>
+            
+                        
+      
+      
+      
+           <div Width="100%" style="padding-right:40px;pading-top:10px;text-decaration:none;">
+           
+               </div>
+            </div>
+            <!--  end content-table  -->
+            
+            
+            
+                   
+             
+           
+            <!------------------------------------------------Successfull POPUP----- ----------------------------------------------------------->
+           <apex:outputPanel id="showpopup">
+         <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!Successbool}"  style="width:100%"/>
+         <apex:outputPanel styleClass="custPopup" layout="block"  rendered="{!Successbool}"  style="width:80%">
+                   
+         
+         <table border="0"  cellspacing="0" cellpadding="0" width="100%" class="tabs_table" >
+                <tr>
+                    <td  align="center" class="pophead"><H2 > <font size="4">Records Status</font> </H2> </td> 
+                </tr>
+                <tr>
+                   <td align="Center" >
+                     
+                      &nbsp;
+                   </td>
+                </tr>
+                   <tr>
+                       <td align="Center" colspan="2"> <apex:outputText >
+                       
+                           BoothLeads.com will now begin to import your file. You will be notified by email at <B style="color:#FF0000; Font-size:13px; Font-weight:bold; text-align:center;">  {!$User.Username}</B> when your import is completed.<br/><br/>Based on the current volume of import activity, we estimate that your import will be completed in approximately <B style="color:#177f0c; Font-size:13px; Font-weight:bold; text-align:center;"> 3 minutes</B>.
+                     
+                       </apex:outputText>
+                      </td>
+                </tr>
+                
+                
+                <tr>
+                   <td align="Center" >
+                     
+                      &nbsp;
+                   </td>
+                </tr>
+                
+                <tr>
+                   <td align="Center">
+                   
+                      <apex:commandbutton Value="OK" style="width:100px;" styleClass="awesome" action="{!CustomerAdminAct}"/>     
+                   </td>
+               </tr>
+                <tr>
+                   <td align="Center">
+                     
+                      &nbsp;
+                   </td>
+                </tr>
+           </table>     
+                   
+          </apex:outputpanel>
+          </apex:outputpanel>
+          
+          <!--------------------------------------------END of Show POPUP--------------------------------------------------------------------->
+          
+          <!-------------------------------------------- Start Of UTF8 Formate Error---------------------------------------------------------->
+          
+           <apex:outputPanel id="showUTF8">
+         <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!UTF8Bool}" />
+         <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!UTF8Bool}" >
+          
+              <table border="0"  cellspacing="0" cellpadding="0" width="100%" class="tabs_table" >
+                    <tr>
+                        <td align="center" class="pophead"><H2 > <font size="4"> File Is Not Valid UTF8 Formate  </font> </H2> </td> 
+                    </tr>
+                    
+                    <tr>
+                        <td> &nbsp;</td>
+                    </tr>
+                    
+                    
+                    <tr>
+                    
+                        <td style="color:#FF0000; text-align:center; font-size:13px; font-weight:Bold;">
+                        
+                        Please open your uploaded File in Notepad, Click  on SaveAS to choose Encoding at the bottom of the Window as UTF8 Formate, Save and Upload again.    
+                        
+                        
+                        
+                          </td>
+                     </tr>   
+                    
+                    
+                    <tr>
+                        <td> &nbsp;</td>
+                    </tr>
+                    
+                    <tr>
+                        <td align="center"> <apex:commandButton style="width:50px" value="Ok" action="{!cancelInSelect}" styleClass="awesome"/> </td>
+                    </tr>
+                    
+                    <tr height="10px">
+                        <td></td>
+                    </tr>
+                    
+                    
+               </table>
+          
+          </apex:outputpanel>
+          </apex:outputpanel>
+          
+          
+        <!-------------------------------------------------- END of UTF8 Formate Error--------------------------------------------------------->
+ 
+ 
+ 
+            <!--  start actions-box 
+
+............................................... -->
+            <!-- end actions-box........... -->
+            
+            
+            <div class="clear"></div>
+         
+        </div>
+        <!--  end content-table-inner 
+
+............................................END  -->
+        </td>
+        <td id="tbl-border-right"></td>
+    </tr>
+    <tr>
+        <th class="sized bottomleft"></th>
+        <td id="tbl-border-bottom">&nbsp;</td>
+        <th class="sized bottomright"></th>
+    </tr>
+    </table>
+    <div class="clear">&nbsp;</div>
+
+</div>
+<!--  end content -->
+<div class="clear">&nbsp;</div>
+</div>
+<!--  end content-outer........................................................END -->
+
+<div class="clear">&nbsp;</div>
+    
+<!-- start footer -->         
+<apex:include pageName="QRCode_Footertemplate"/>
+<!-- end footer -->
+ 
+
+</apex:form>
+<!-------------------------------------------------- Help Form ----------------------------------------->
+ <apex:form id="Help">
+                <apex:outputPanel id="Helppopup">
+                     <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!HelpPopUp}" />
+                         <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!HelpPopUp}" style="width:85%;">                         
+                         <div style="height:30px; width:100%; background-color:#cccccc;">
+                         <apex:commandLink value="X" action="{!CloseHelppopup}" style="float:right; color:#000000; padding-right:8px; margin-left:5px; font-weight:bold; font-size:16px;" title="Close"></apex:commandlink>
+                         </div>
+                         <!--<apex:commandbutton value="Close" action="{!CloseHelppopup}" styleClass="awesome"></apex:commandbutton>--> 
+                        <apex:iframe src="http://tcheckin.com/Event_Admin_Help/Event_Admin_Help.html"  scrolling="true"/>
+                        </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:form>
+<!--//---------------------------------------------*********** END******** ---------------------------------------//-->                 
+
+  
+</apex:page>

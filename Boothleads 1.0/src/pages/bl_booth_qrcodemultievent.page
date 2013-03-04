@@ -1,0 +1,14 @@
+<apex:page controller="QRcode_Boothadmin_boothmultieventCon" renderAs="pdf">
+  
+  <table>
+             <tr><td align="center" style="width:100%;padding-left:65px;">
+               <apex:image value="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl={!code}"/>    
+             </td></tr>
+             <tr><td align="center">
+             {!boothdetail.BoothAdmin_Organization_Name__c}
+             </td></tr>
+             
+    </table> 
+  
+  
+</apex:page>

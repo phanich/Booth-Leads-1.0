@@ -1,0 +1,139 @@
+<apex:page showHeader="false" sidebar="false" controller="BoothAdminSignin" id="loginComponent" standardStylesheets="false" >
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/screen.css")}"/>
+
+<Script type="text/javascript">
+function validateForm()
+{
+    var E=document.forms["loginForm"]["username"].value;
+    var atpos=E.indexOf("@");
+    var dotpos=E.lastIndexOf(".");
+    if (E==null || E=="" || atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+      {
+      alert("Enter Valid username");
+      return false;
+      }
+}      
+</Script>
+
+<style>
+body   {
+    background: url(images/login/login_bg.jpg) no-repeat top center;
+    }
+    
+ a:hover.forgot-pwd {
+    color: blue;
+    text-decoration:underline;
+    }
+.password{
+background-image:url(images/form_bg.jpg);
+font-size:12px;
+background-repeat:repeat-x;
+border:1px solid #FBB917;
+width: 180px;
+color:#333333;
+padding:5px;
+margin-right:4px;
+margin-bottom:8px;
+font-family:tahoma, arial, sans-serif;
+
+}    
+    
+</style>
+
+
+
+
+<apex:form id="loginForm"  forceSSL="true" onsubmit="return validateForm()">
+
+<body id="login-bg" > 
+ 
+
+<div id="login-holder">
+
+  
+    <div >
+        <apex:image url="{!$Resource.BoothLeadLogo}" width="244" height="78" style="padding-left:25px;"/>
+    </div>
+    
+    <div class="clear"></div>
+    
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
+  <tr>
+    <td align="center">
+        
+        
+        
+         
+          <div id="loginbox">
+          
+         <!--validation on login  --> 
+          <table border="0" cellpadding="0" cellspacing="0" >
+                 
+                 
+                  <tr>
+                  <td >
+                   <apex:outputPanel layout="block" >
+      <apex:pageMessages id="error" />
+      </apex:outputPanel>
+      </td>
+        </tr>
+         </table>
+          
+           <!--validation closed here-->
+           
+           
+             <div id="login-inner" >
+             
+                
+      
+                  
+                  
+                 <table border="0" cellpadding="0" cellspacing="0" > 
+                  
+                  
+                  <tr>
+                    <td align="center" valign="top" colspan="2" height="45px"><h1>Booth Admin Login</h1>
+
+                     </td>
+                  </tr>
+                  <tr>
+                    <th> <apex:outputLabel value="User Name" for="username" onblur="validateForm()" /></th>
+                    <td>  <apex:inputText id="username" value="{!loginname}" styleClass="password"/>
+
+                    
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>  <apex:outputLabel value="Password" for="password" onfocus="validateForm()" /></th>
+                    <td><apex:inputSecret id="password" value="{!password}" styleClass="password"/>
+                         
+                    </td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td valign="top">  
+                   </td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td><apex:commandButton action="{!login}" value="LOGIN" onclick="return validateForm()" id="loginButton" styleClass="awesome" /></td>
+                  
+                  </tr>
+                </table>
+                
+              </div>
+            
+           
+            <div class="clear"></div>
+            
+     <apex:commandLink value="Need Password" styleClass="forgot-pwd" id="fgpass" action="{!forgotpassword}"/>
+     
+      </div></td>
+  </tr>
+</table>
+
+</div>
+</body>
+</apex:form>
+
+</apex:page>

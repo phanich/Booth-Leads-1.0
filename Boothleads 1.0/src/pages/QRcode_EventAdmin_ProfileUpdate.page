@@ -1,0 +1,255 @@
+<apex:page controller="ProfileUpdateController" showHeader="false" sidebar="false" action="{!checkUserId}" id="Profilepage">
+
+<!---------------------- Including Statements/Stylesheets From Static Resource -------------------->
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/pro_dropline_ie.css")}"/>
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/screen.css")}"/>
+
+
+<apex:include pageName="QRCode_headertemplate"/>
+<!----------------------****************** END *****************-------------------------->
+<script>
+    function submitform(){
+    
+     
+    var lvTnId = document.getElementById('{!$Component.Profilepage:formid:firstname}');
+    
+    var lvStId = document.getElementById('{!$Component.Profilepage:formid:Lastname}');
+    
+    var lvEtId = document.getElementById('{!$Component.Profilepage:formid:Orgname}');
+   
+    var PhoneId = document.getElementById('{!$Component.Profilepage:formid:Phone}');
+    
+    var ZipId = document.getElementById('{!$Component.Profilepage:formid:Zip}');
+   
+   
+    lvTnId.value=lvTnId.value.trim();
+         
+    lvStId.value=lvStId.value.trim();
+         
+    lvEtId.value=lvEtId .value.trim();
+   
+    PhoneId.value = PhoneId.value.trim();
+    
+    ZipId.value = ZipId.value.trim();
+    
+    
+                if(lvTnId.value == "")
+                  {
+                      alert("Please Furnish First Name");
+                      lvTnId.focus();
+                      return false;
+                  }
+              
+                   if(lvStId.value == "")
+                   {
+                      alert("Please Furnish Last Name");
+                      lvStId.focus();
+                      return false;
+                  }  
+                  if(lvEtId.value == "")
+                   {
+                      alert("Please Furnish Organization Name");
+                      lvEtId.focus();
+                      return false;
+                  }
+                   
+                 if(PhoneId.value != ""){
+                 if( validatePhoneNumber(PhoneId.value)==false)
+                 {
+                   alert('Please provide valid 10 digit phone number');
+                   PhoneId.focus();
+                   return false;
+                 }
+    
+             }
+             if(ZipId.value != ""){
+            if( validateZipCode(ZipId.value)==false)
+             {
+           alert('Please Enter valid Zip Code');
+           ZipId.focus();
+           return false;
+             }
+    }     
+  }
+    
+    function validateZipCode(elementValue){
+         var zipCodePattern = /^\d{5}$|^\d{5}-\d{4}$/;
+         return zipCodePattern.test(elementValue);
+    } 
+    function validatePhone(field,alerttxt) 
+    {
+        if (field.match(/^\d{10}/))
+         {
+             return true;
+         } 
+   
+        return false;
+    }
+    
+    function validatePhoneNumber(elementValue)
+    {  
+        var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;  
+        return phoneNumberPattern.test(elementValue);  
+    }  
+</script>
+
+<!--MENU START-->
+
+ 
+<!--  start nav-outer-repeat................................................................................................. START -->
+<div class="nav-outer-repeat"> 
+<!--  start nav-outer -->
+<div class="nav-outer"> 
+
+<!-- Start Nav Right-->
+        <div id="nav-right">
+         <!----LOGOUT ACTION -->
+           <div class="nav">
+        <div class="table">
+        
+       <apex:form >
+       
+        
+       <div class="nav-divider">&nbsp;</div>
+        <apex:commandLink action="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}" style="text-style:bold; color:#FFFFFF; padding:10px 25px 0 0;" title="Logout">{!$Label.site.logout}</apex:commandLink>
+      <div class="nav-divider">&nbsp;</div>
+        <apex:commandLink style="text-style:bold; color:#FFFFFF; padding:10px 15px 0 0;cursor:help" action="{!Help}" >
+        Help
+        </apex:commandLink>
+       </apex:form>  
+            </div></div>
+           
+           <!----LOGOUT ACTION END--->
+             <div class="clear">&nbsp;</div>
+          </div>
+        <!-- end nav-right -->
+
+
+        <!--  start nav -->
+        <div class="nav">
+        <div class="table">
+        
+       
+        <div class="nav-divider">&nbsp;</div>
+        <ul class="current"><li><apex:form ><apex:commandLink action="{!EventAction}"><b>Events</b></apex:commandLink></apex:form></li></ul>
+   
+        
+        <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="select"><li><apex:form ><apex:commandlink action="{!Customeraction}"><b>Booths</b></apex:commandlink></apex:form></li></ul>
+        
+             
+        <div class="nav-divider">&nbsp;</div>
+        <ul class="select"><li><apex:form > <apex:commandLink action="{!AttendeesAction}" ><b>Attendees</b> </apex:commandLink></apex:form></li></ul>
+         <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="select"><li><apex:form ><apex:commandlink action="{!Reportsaction}"><b>Reports</b></apex:commandlink></apex:form></li></ul>
+          <div class="clear"></div>
+          
+        </div>
+        <div class="clear"></div>
+        </div>
+        <!--  start nav -->
+        
+
+</div>
+<div class="clear"></div>
+<!--  start nav-outer -->
+</div>
+<!--MENU END-->
+<!--  start page-heading -->
+    <div id="page-heading"><br />
+        <h1 style="font-size:20px;">Profile</h1> 
+        
+        <div style="float:right; padding-right:10%; color:#0000FF;"><apex:form ><apex:commandlink action="{!Profileupdatepage}"><b><font color="sky blue" size="3px">Reset Password</font></b></apex:commandlink></apex:form></div>
+    </div>
+    <!-- end page-heading -->
+
+<style>
+
+</style>
+        
+        <apex:form id="formid">
+    <table width="98%" align="center" style="margin:0px auto; border:1px solid #cccccc; line-height:35px;  padding:20px;"><tr><td> 
+    
+    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:40px auto;"  class="box">
+  <tr>
+    <td width="25%" height="30" style="padding-left:15px;"></td>
+    <td width="25%" height="30"></td>
+    <td align="left" style="padding-left:15px;"></td>
+    <td width="23%" height="30"></td>
+  </tr>
+  
+  <tr>
+    <td width="25%" height="30" align="right">First Name:</td>
+    <td width="25%" height="30" align="left" style="padding-left:10px;"> <apex:inputText value="{!EventAdmin.EventAdmin_FirstName__c }" style="width:180px;" id="firstname"/></td>
+    <td align="right" style="text-align:right;">Organization Address1:</td>
+    <td width="23%" height="30" align="left"  style="padding-left:10px;"><apex:inputtext value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_Address1__c}" style="width:180px;" /></td>
+  </tr>
+  <tr>
+    <td height="30" align="right" style="padding-left:15px;">Last Name:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputText value="{!EventAdmin.EventAdmin_LastName__c }" style="width:180px;" id="Lastname"/></td>
+    <td align="right" style="padding-left:15px;">Organization Address2:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputtext value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_Address2__c}" style="width:180px;" /></td>
+  </tr>
+  <tr>
+    <td height="30" align="right" style="padding-left:15px;">Email ID:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:outputText value="{!EventAdmin.EventAdmin_EmailId__c}"/></td>
+    <td align="right" style="padding-left:15px;">Organization City:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputText value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_City__c}" style="width:180px;"/></td>
+  </tr>
+  <tr>
+    <td height="30" align="right" style="padding-left:15px;">Organization Name:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputText value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganizationName__c}" style="width:180px;" id="Orgname"/></td>
+    <td align="right" style="padding-left:15px;">Organization State:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputfield value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_NewState__c}" style="width:180px;"/></td>
+  </tr>
+  <tr>
+    <td height="30" align="right" style="padding-left:15px;">Organization Phone Number:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputtext value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_PhoneNumber__c}" style="width:180px;" id="Phone"/></td>
+    <td align="right" style="padding-left:15px;">Organization Zip Code:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputText value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_ZipCode__c}" style="width:180px;" id="Zip"/></td>
+  </tr>
+  <tr>
+    <td height="30" align="right" style="padding-left:15px;">Organization Website URL:</td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputtext value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_WebsiteURL__c}" style="width:180px;"/></td>
+    <td align="right" style="padding-left:15px;"><!-- <span style=" text-align:right;padding-right:15px;">-->Organization PO Box:<!--</span>--></td>
+    <td height="30" align="left" style="padding-left:10px;"><apex:inputText value="{!EventAdmin.EventHostingOrganization_Id__r.Event_HostingOrganization_POBox__c}" style="width:180px;"/></td>
+  </tr>
+  <tr>
+    <td height="30" style="padding-left:15px;">&nbsp;</td>
+    <td height="30" colspan="2" align="center"><apex:commandButton value="Save" action="{!ProfileSave}" title="Save" styleClass="awesome" onclick="return submitform();"/>
+        <!--<apex:commandButton value="Cancel" action="{!ProfileCancel}" title="Cancel" styleClass="awesome"/>--></td>
+    <td height="30">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="25%" height="30" style="padding-left:15px;"></td>
+    <td width="25%" height="30"></td>
+    <td align="left" style="padding-left:15px;"></td>
+    <td width="23%" height="30"></td>
+  </tr>
+</table>
+   </td></tr></table>
+</apex:form>
+<!-------------------------------------------------- Help Form ----------------------------------------->
+ <apex:form id="Help">
+                <apex:outputPanel id="Helppopup">
+                     <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!HelpPopUp}"/>
+                         <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!HelpPopUp}" style="width:85%;">                         
+                         <div style="height:30px; width:100%; background-color:#cccccc;">
+                         <apex:commandLink value="X" action="{!CloseHelppopup}" style="float:right; color:#000000; padding-right:8px; margin-left:5px; font-weight:bold; font-size:16px;" ></apex:commandlink>
+                         </div>
+                         <!--<apex:commandbutton value="Close" action="{!CloseHelppopup}" styleClass="awesome"></apex:commandbutton>--> 
+                        <apex:iframe src="http://tcheckin.com/Event_Admin_Help/Event_Admin_Help.html"  scrolling="true"/>
+                        </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:form>
+
+<!--//---------------------------------------------*********** END******** ---------------------------------------//-->       
+
+<apex:include pageName="QRCode_Footertemplate"/>
+
+
+
+</apex:page>

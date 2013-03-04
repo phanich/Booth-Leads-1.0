@@ -1,0 +1,9 @@
+<apex:page controller="QRcode_Boothadmin_boothCon" renderAs="pdf">
+  
+ 
+  <div style="margin:0px auto; text-align:center;">
+  <apex:image value="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl={!code}"/>  <br />
+  <h1>{!boothdetail.BoothAdmin_Organization_Name__c}</h1>
+  </div>
+  
+</apex:page>

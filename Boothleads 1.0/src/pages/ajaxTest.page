@@ -1,0 +1,18 @@
+<apex:page >
+ 
+ 
+ <apex:form >
+
+
+<apex:outputPanel id="Out" >
+ <c:AjaxLoader loaderImage="{!$Resource.AjaxLoaderImage}"></c:AjaxLoader>
+ 
+ 
+ <apex:commandButton value="Click" Status="AjaxLoader"  reRender="Out" />
+ 
+ </apex:outputPanel>
+ 
+ </apex:form>
+ 
+ 
+</apex:page>

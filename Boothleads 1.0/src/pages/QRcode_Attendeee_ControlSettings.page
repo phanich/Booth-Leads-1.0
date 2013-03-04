@@ -1,0 +1,57 @@
+<apex:page Controller="QRcode_Attendeee_ControlSettingsCon" >
+    <apex:form >
+        
+   
+  <table><tr><td>
+   
+    <table>
+        <tr><td>
+           Prefix  </td><td>  <apex:inputCheckbox value="{!Prefix}" title="AAA"/> </td>
+          </tr> <tr><td> 
+           First Name </td><td>  <apex:inputCheckbox value="{!FirstName}" selected="true" disabled="true"/> </td></tr> <tr><td> 
+           Last Name</td><td>  <apex:inputCheckbox value="{!LastName}" selected="true" disabled="true"/> </td></tr> <tr><td>
+           Sufix     </td><td>  <apex:inputCheckbox value="{!sufix}"/> </td></tr> <tr><td>
+           Email ID    </td><td>  <apex:inputCheckbox value="{!emailID}" selected="true" disabled="true"/> </td></tr> <tr><td>
+           Company Name   </td><td>  <apex:inputCheckbox value="{!CompanyName}" selected="true" disabled="true"/> </td></tr> <tr><td>
+           Designation   </td><td>  <apex:inputCheckbox value="{!Degi}"/> </td></tr> <tr><td>
+           Mobile Number  </td><td>  <apex:inputCheckbox value="{!mobile}"/> </td></tr> <tr><td>
+           Age </td><td>  <apex:inputCheckbox value="{!age}"/> </td></tr> <tr><td>
+           Gender </td><td>  <apex:inputCheckbox value="{!gen}"/> </td></tr> <tr><td>
+           DOB </td><td>  <apex:inputCheckbox value="{!dob}"/> </td></tr> 
+            <tr><td valign="2"><b> Address Information</b></td></tr>
+            
+            <tr><td> Home Address </td><td>  <apex:inputCheckbox value="{!homeinfo}"/> </td></tr> <tr><td>
+               Shipping Address </td><td>  <apex:inputCheckbox value="{!Shippinginfo}"/> </td></tr> <tr><td>
+               Work Address </td><td>  <apex:inputCheckbox value="{!workinfo}"/> </td></tr> 
+            </table> </td> <td><table>
+               
+               <tr><td valign="2"><b> Work Information</b></td></tr>
+               <tr><td>
+               Primary Business Category </td><td>  <apex:inputCheckbox value="{!PBC}"/> </td></tr> <tr><td>
+               Secondary Business Category </td><td>  <apex:inputCheckbox value="{!SBC}"/> </td></tr> <tr><td>
+               No. Of Employees </td><td>  <apex:inputCheckbox value="{!NOEmp}"/> </td></tr> <tr><td>
+               Business Established Date </td><td>  <apex:inputCheckbox value="{!BEDate}"/> </td></tr> <tr><td>
+               Business Revenue </td><td>  <apex:inputCheckbox value="{!BRev}"/> </td></tr> <tr><td>
+               Business Tax ID </td><td>  <apex:inputCheckbox value="{!BTaxID}"/> </td></tr> <tr><td>
+               Business Duns Number </td><td>  <apex:inputCheckbox value="{!BDN}"/> </td></tr> <tr><td>
+               WebSite URL </td><td>  <apex:inputCheckbox value="{!webUrl}"/> </td></tr> <tr><td>
+               Blog URL </td><td>  <apex:inputCheckbox value="{!blogURL}"/> </td></tr> <tr><td>
+               Diversity Type </td><td>  <apex:inputCheckbox value="{!DT}"/> </td></tr> <tr><td>
+               Business Description </td><td>  <apex:inputCheckbox value="{!BDesc}"/> </td></tr> 
+               
+               <tr><td valign="2"><b> NAICS Codes Information</b></td></tr>
+                <tr><td>
+               NAICS Code1 </td><td>  <apex:inputCheckbox value="{!NAICSCode1}"/> </td></tr> <tr><td>
+               NAICS Code2 </td><td>  <apex:inputCheckbox value="{!NAICSCode2}"/> </td></tr> <tr><td>
+               NAICS Code3 </td><td>  <apex:inputCheckbox value="{!NAICSCode3}"/> </td></tr>
+        
+      </table>   </td></tr>
+     <tr><td> <apex:commandButton value="save Settings" action="{!AttendeeSetting}"/> </td></tr>
+  </table>
+           
+           
+          <apex:outputText value="{!selectedAttendeeFields }"></apex:outputText> 
+           
+    </apex:form>
+        
+</apex:page>

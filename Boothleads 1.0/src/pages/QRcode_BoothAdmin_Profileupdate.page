@@ -1,0 +1,262 @@
+<apex:page controller="QRcode_BoothAdmin_Profileupdatecon" showHeader="false" sidebar="false" action="{!checkUserId}">
+
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/pro_dropline_ie.css")}"/>
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/screen.css")}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.phani2,"css/pro_dropline_ie.css")}"/>
+
+
+<!--<apex:includeScript value="{!$Resource.QRDateTimePickerjs2}"/>-->
+
+<apex:includeScript value="{!$Resource.DateTime}"/>
+
+
+  <div id="page-top-outer">    
+
+<!-- Start: page-top -->
+<div id="page-top">
+
+    <!-- start logo -->
+    <div id="logo">
+    
+      
+    </div>
+    <!-- end logo -->
+         
+    <!--  start top-search -->
+    <div id="top-search">
+     
+        <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            
+        
+        <td class="welcome">
+        
+        <font>Welcome :</font>
+                   <b><font size="2" color="sky blue">{!$User.Firstname}&nbsp;{!$User.Lastname}   </font></b>
+        
+        <!--<apex:inputText value="{!searchstr}" styleClass="top-search-inp" />-->  </td>
+        
+        <td>
+        
+       
+       <!--<apex:commandButton action="{!search}" value="search" image="{!URLFOR($Resource.GlobalnestPortal_Cssall,"css/images/shared/top_search_btn.gif")}"/>-->
+       
+        </td>
+        </tr>
+        </table>
+    </div>
+    <!--  end top-search -->
+   
+
+</div>
+<!-- End: page-top -->
+
+</div>
+
+
+ <div class="clear"></div>
+ 
+ 
+
+<div class="nav-outer-repeat"> 
+<!--  start nav-outer -->
+<div class="nav-outer"> 
+
+<!-- Start Nav Right-->
+        <div id="nav-right">
+         <!----LOGOUT ACTION -->
+           <div class="nav">
+        <div class="table">
+        
+       <apex:form >
+       
+        
+       <div class="nav-divider">&nbsp;</div>
+        <apex:commandLink action="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}" style="text-style:bold; color:#FFFFFF; padding:10px 25px 0 0;" title="Logout">{!$Label.site.logout}</apex:commandLink>
+      <div class="nav-divider">&nbsp;</div>
+       <apex:commandLink style="text-style:bold; color:#FFFFFF; padding:10px 15px 0 0;cursor:help" action="{!Help}" title="Help">Help</apex:commandLink>
+     
+       </apex:form>  
+            </div></div>
+           
+           <!----LOGOUT ACTION END--->
+             <div class="clear">&nbsp;</div>
+          </div>
+        <!-- end nav-right -->
+
+
+        <!--  start nav -->
+        <div class="nav">
+        <div class="table">
+        
+       
+        <div class="nav-divider">&nbsp;</div>
+        <ul class="select"><li><apex:form ><apex:commandLink action="{!EventAction}"><b>Events</b></apex:commandLink></apex:form></li></ul>
+   
+        
+        <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="select"><li><apex:form ><apex:commandlink action="{!Customeraction}"><b>Booth Users</b></apex:commandlink></apex:form></li></ul>
+        
+             
+        <div class="nav-divider">&nbsp;</div>
+        <ul class="select"><li><apex:form > <apex:commandLink action="{!AttendeesAction}" ><b>Leads </b> </apex:commandLink></apex:form></li></ul>
+         <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="select"><li><apex:form ><apex:commandlink action="{!Reportsaction}"><b>Reports</b></apex:commandlink></apex:form></li></ul>
+         
+          <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="select"><li>
+        <apex:form >
+        <apex:commandLink action="{!boothqrcodeAction}" ><b>Booth Qrcode</b> </apex:commandLink>
+        </apex:form>
+         </li>
+        </ul>
+          
+          
+          
+        </div>
+        <div class="clear"></div>
+        </div>
+        <!--  start nav -->
+        
+
+</div>
+<div class="clear"></div>
+<!--  start nav-outer -->
+</div>
+<!--MENU END-->
+<!--  start page-heading -->
+    <div id="page-heading"><br />
+        <h1 style="font-size:20px;">Profile</h1> 
+        
+        <div style="float:right; padding-right:10%;"><apex:form >
+        <apex:commandlink action="{!Profileupdatepage}"><b><font color="#00a5d0" size="3px">Reset Password</font></b></apex:commandlink></apex:form></div>
+    </div>
+    <!-- end page-heading -->
+
+
+
+<apex:form >
+
+<table width="98%" align="center" style="margin:0px auto; border:1px solid #cccccc; line-height:35px;  padding:20px;"><tr><td> 
+
+       <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:40px auto;"  class="box">
+   <tr><td colspan="2">&nbsp;</td></tr>
+   <tr>
+     <td width="50%" align="center" valign="top"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+       <tr>
+         <td width="50%" height="35px" align="right" valign="middle" style="padding-left:25px;">First Name<font size="4" color="red">*</font></td>
+         <td width="50%" height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_FirstName__c}"    id="UserFirstName"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle"  style="padding-left:25px;">Last Name<font size="4" color="red">*</font></td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_LastName__c}"  id="UserLastName"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle"  style="padding-left:25px;"> Email Id<font size="4" color="red">*</font></td>
+         <td align="left" height="35px" valign="middle" ><apex:Outputlabel value="{!BoothAdmin.BoothAdmin_EmailId__c}" id="UseremailId"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle"  style="padding-left:25px;">Organization Name<font size="4" color="red">*</font></td>
+         <td height="35px" align="left" valign="middle" style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_Name__c}" id="UserOrg"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle" style="padding-left:25px;"> Organization Phone Number</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_PhoneNumber__c}" id="PhoneNo"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle"  style="padding-left:25px;"> Organization Website URL</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px;"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_WebsiteURL__c}" style="width:200px"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle"  style="padding-left:25px;"></td>
+         <td height="35px" align="left" valign="middle" ></td>
+        </tr>
+     </table></td>
+     <td width="50%" height="25" align="center" valign="top"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+       <tr>
+         <td width="40%" height="35px" align="right" valign="middle" >Organization Address1</td>
+         <td width="60%" height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_Address1__c}" /></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle" >Organization Address2</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_Address2__c}"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle"> Organization City</td>
+         <td height="35px" align="left" valign="middle" style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_City__c}" id="UserOrg1"/></td>
+        </tr>
+      <!-- <tr>
+         <td height="35px" align="right" valign="middle" > Organization State</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px">
+         <apex:inputfield value="{!BoothAdmin.BoothAdmin_Organization_NewState__c}"/></td>
+        </tr>
+        -->
+        
+        <tr>
+         <td height="35px" align="right" valign="middle" > Organization State</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px">
+         <apex:selectList value="{!selectedState}" size="1" multiselect="false">
+          <apex:selectOptions value="{!states}"/>
+         
+         </apex:selectList> </td>
+        </tr>
+        
+        
+        
+       <tr>
+         <td height="35px" align="right" valign="middle" >Organization Zip Code</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputField value="{!BoothAdmin.BoothAdmin_Organization_ZipCode__c}"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle">Organization PO Box</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputfield value="{!BoothAdmin.BoothAdmin_Organization_POBox__c}"/></td>
+        </tr>
+       <tr>
+         <td height="35px" align="right" valign="middle" > Organization Description</td>
+         <td height="35px" align="left" valign="middle"  style="padding-left:5px"><apex:inputTextarea value="{!BoothAdmin.BoothAdmin_Organization_Description__c}" style="width:150px"/></td>
+        </tr>
+     </table></td>
+   </tr>
+   <tr>
+     <td height="35px" colspan="2" align="center" valign="middle">
+      <apex:commandButton Value="Save" action="{!Save}" styleclass="awesome" title="Save" />      &nbsp;
+                    <!--<apex:commandlink Value="Cancel" action="{!Cancle1}" styleclass="awesome" title="Cancel" />-->
+     </td>
+   </tr>
+    </table>
+    
+    
+    </td></tr></table>
+    
+</apex:form>
+<!-------------------------------------------------- Help Form ----------------------------------------->
+ <apex:form id="Help">
+                <apex:outputPanel id="Helppopup">
+                     <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!HelpPopUp}"/>
+                         <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!HelpPopUp}" style="width:85%;">                         
+                         <div style="height:30px; width:100%; background-color:#cccccc;">
+                         <apex:commandLink value="X" action="{!CloseHelppopup}" style="float:right; color:#000000; padding-right:8px; margin-left:5px; font-weight:bold; font-size:16px;" title="Close"></apex:commandlink>
+                         </div>
+                         <!--<apex:commandbutton value="Close" action="{!CloseHelppopup}" styleClass="awesome"></apex:commandbutton>--> 
+                        <apex:iframe src="http://www.tcheckin.com/boothadminhelp/"  scrolling="true"/>
+                        </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:form>
+<!--//---------------------------------------------*********** END******** ---------------------------------------//-->                 
+ 
+  
+
+ <div id="footer">
+    <!--  start footer-left -->
+    <div id="footer-left">&copy; Copyright Globalnest LLC. <span id="spanYear"></span> 
+    <a href="">www.globalnest.com</a>. All rights reserved.</div>
+    <!--  end footer-left -->
+    <div class="clear">&nbsp;</div>
+</div>
+
+</apex:page>

@@ -1,0 +1,13 @@
+<apex:page controller="exportBoothadminsCon" contentType="application/csv#BoothAdmins.csv" showHeader="false">FirstName,LastName,EmailId,Comapany
+
+<apex:repeat value="{!boothAdmin}" var="r">
+{!r.BoothAdmin_FirstName__c},{!r.BoothAdmin_LastName__c},{!r.BoothAdmin_EmailId__c},{!r.BoothAdmin_Organization_Name__c}
+
+
+</apex:repeat>
+
+
+
+
+  
+</apex:page>

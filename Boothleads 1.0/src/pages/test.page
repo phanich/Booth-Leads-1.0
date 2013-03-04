@@ -1,0 +1,23 @@
+<apex:page >
+ <script type="text/javascript">
+function emailForm(){
+
+var daReferrer = document.referrer;
+var email = "yours@email.com";
+var errorMsg = "here here here is the error error error error";
+var subject = "Exception Error";
+var body_message = "%0D%0D%0D%0DThank you "+name+" for submitting this error to us. Please tell us in the space above, what you were doing when the error occurred.%0D%0DReferring Page: "+daReferrer+" %0D%0DException Error Message:%0D-------------------------------------------%0D"+errorMsg;
+
+var mailto_link = 'mailto:'+email+'?subject='+subject+'&body='+body_message;
+
+win = window.open(mailto_link,'emailWindow');
+if (win && win.open &&!win.closed) win.close();
+}
+</script>
+
+<div style="border:2px solid black;padding:10px;">
+Please <a href="#" onclick="emailForm();">Email Support</a>
+</div>
+
+
+</apex:page>

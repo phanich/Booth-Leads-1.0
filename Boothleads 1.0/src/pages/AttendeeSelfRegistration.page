@@ -1,0 +1,1040 @@
+<apex:page standardController="QR_AttendeeSummary__c" cache="false"  extensions="AttendeeSelfRegistrationCon" showHeader="false" sidebar="false" standardStylesheets="false"  id="ThePage" >
+<!--css-->
+<!--<apex:stylesheet value="{!URLFOR($Resource.bldashboard2,"menu_assets/styles.css")}"/>-->
+<!--css-->
+
+<script language="JavaScript">
+ function resetForm(){
+   document.getElementById("ThePage:Theform1").reset();
+ } 
+</script>
+
+
+
+
+
+
+<apex:stylesheet value="{!URLFOR($Resource.prk,"css/screen.css")}"/>
+
+
+<apex:stylesheet value="{!URLFOR($Resource.prk,"css/pro_dropline_ie.css")}"/>
+ 
+<div id="page-top-outer">    
+
+<!-- Start: page-top -->
+<div id="page-top">
+
+    <!-- start logo -->
+    <div id="logo">
+    
+    </div>
+    <!-- end logo -->
+         
+    <!--  start top-search -->
+    <div id="top-search">
+     
+        <table  cellpadding="0" cellspacing="0">
+        <tr>
+            
+        
+        <td Class="welcome">
+        
+        <b><font>Welcome  :</font>
+                   <font size="2" color="Sky Blue">{!QR_AttendeeSummary__c.Attendee_FirstName__c}&nbsp;{!QR_AttendeeSummary__c.Attendee_LastName__c}</font></b>
+        
+        <!--<apex:inputText value="{!searchstr}" styleClass="top-search-inp" />-->  </td>
+        
+       
+        
+       
+  
+       <!--<apex:commandButton action="{!search}" value="search" image="{!URLFOR($Resource.QRCode_CSS,"css/images/shared/top_search_btn.gif")}"/>-->
+       
+       
+        </tr>
+        </table>
+    </div>
+    <!--  end top-search -->
+    <div class="clear"></div>
+
+</div>
+<!-- End: page-top -->
+
+</div>
+<!-- End: page-top-outer -->
+   
+<div class="clear">&nbsp;</div>
+ 
+<!--  start nav-outer-repeat................................................................................................. START -->
+<div class="nav-outer-repeat"> 
+<!--  start nav-outer -->
+<div class="nav-outer"> 
+
+<!-- Start Nav Right-->
+        
+        <!-- end nav-right -->
+
+
+        <!--  start nav -->
+        <div class="nav">
+        <div class="table">
+    <apex:form id="theForm">    
+       
+        
+                            
+         <ul class="select"><li>
+        
+        <apex:commandLink action="{!eventDetails}"><b>Event Info</b></apex:commandLink></li></ul>
+         <div class="nav-divider">&nbsp;</div>
+        <!--
+        <ul class="select"><li>
+        
+         <apex:commandLink action="{!eventschedule}"><b>Event Schedule</b></apex:commandLink></li></ul>
+        -->
+        
+         <div class="nav-divider">&nbsp;</div>
+        
+      
+        
+        
+        
+       
+        
+    </apex:form>
+        
+        
+        
+        
+        <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <!--  start nav -->
+        
+
+</div>
+<div class="clear"></div>
+<!--  start nav-outer -->
+</div>
+<!--  start nav-outer-repeat................................................... END -->
+
+ <div class="clear"></div><br />
+ 
+ <!--<apex:include id="header" pageName="QRCode_headertemplate"/>
+ 
+ <apex:stylesheet value="{!URLFOR($Resource.QRCode_CSS,"css/screen.css")}"/>
+<apex:stylesheet value="{!URLFOR($Resource.QRCode_CSS,"css/pro_dropline_ie.css")}"/> -->
+
+
+<!--<apex:includeScript value="{!$Resource.QRDateTimePickerjs2}"/>-->
+
+<!--header-->
+
+<!--MENU END-->
+
+<!--header-->
+
+
+
+
+
+
+<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+   
+    $(document).ready( function() {
+   
+        // When site loaded, load the Popupbox First
+        loadPopupBox();
+   
+        $('#popupBoxClose').click( function() {           
+            unloadPopupBox();
+        });
+       
+        $('#container').click( function() {
+            unloadPopupBox();
+        });
+
+        function unloadPopupBox() {    // TO Unload the Popupbox
+            $('#popup_box').fadeOut("slow");
+            $("#container").css({ // this is just for style       
+                "opacity": "1" 
+            });
+        }   
+       
+        function loadPopupBox() {    // To Load the Popupbox
+            $('#popup_box').fadeIn("slow");
+            $("#container").css({ // this is just for style
+                "opacity": "0.3" 
+            });        
+        }       
+    });
+</script>    
+
+
+
+
+
+
+
+<script src="/js/dojo/0.4.1/dojo.js"></script>
+<script src="/soap/ajax/11.1/connection.js" type="text/javascript"></script>
+<script type="text/javascript">
+dojo.require("dojo.collections.Store");
+dojo.require("dojo.charting.Chart");
+dojo.require('dojo.json');
+var arYears = getYears();
+function swapYears(){
+if(document.getElementById('calYearPicker') != null) {
+var select = document.getElementById('calYearPicker');
+var curValue = select.value;
+var parentx = select.parentNode;
+parentx.removeChild(select);
+select = document.createElement('select');
+select.size = 1;
+select.id = 'calYearPicker';
+select.name = 'calYearPicker';
+parentx.appendChild(select);
+}
+if(select != null) {
+for(x=0;x<100;x++) {
+select.options[x] = new Option(arYears[x], arYears[x], false, false);
+}
+}
+}
+function getYears() {
+sforce.sessionId = getCookie('sid');
+sforce.connection.sessionId=sforce.sessionId;
+var out = [];
+var currentTime = new Date()
+var year = currentTime.getFullYear()
+try {
+for(x=0;x<100;x++) {
+out[x] = x+year-99;
+}
+
+} catch(error) {
+alert(error);
+}
+return out;
+}
+dojo.addOnLoad(swapYears);
+</script>
+
+
+
+
+<style>
+* :focus { outline: 0; }
+body{font-family: Arial, Helvetica, sans-serif;font-size: 12px;}
+h2  {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+   
+    text-align:left;
+    
+   
+        }
+        
+ul{list-style-type:none;}
+        
+ .textbox {
+    background-image:url(../images/form_bg.jpg);
+    background-repeat:repeat-x;
+    border:1px solid #d1c7ac;
+    width: 230px;
+    color:#333333;
+    padding:3px;
+    margin-right:4px;
+    margin-bottom:8px;
+    height:20px;
+    font-family:tahoma, arial, sans-serif;
+    width:270px;
+}
+p{width:100%; background-color:#75b9fe; color:#FFFFFF; height:25px;font-size:14px; margin:0px;cursor:pointer; padding-top:5px;}
+p span {padding-left:7px;}
+
+</style>
+  <!-- Begin Default Content REMOVE THIS -->
+ <script type="text/javascript">
+jQuery(document).ready(function($) {
+        jQuery("#holder ul").not(":first").hide();
+        jQuery("#holder p").click(function(){
+          if(jQuery(this).next("ul").not(":visible"))
+          {
+            jQuery("#holder ul").animate({height:"hide"},"fast");
+            jQuery(this).next("ul").animate({height:"show"},"fast");
+          }
+        });
+      });
+
+</script>
+
+
+ <apex:stylesheet value="{!URLFOR($Resource.jquerycss,"/css/demo.css")}"/>
+ 
+
+ 
+ <apex:stylesheet value="{!URLFOR($Resource.jquerycss,"/css/osx.css")}"/>
+
+
+<!-- <apex:stylesheet value="{!URLFOR($Resource.jquerycss,"/css/screen.css")}"/>-->
+
+ <apex:includescript value="{!URLFOR($Resource.jqueryjs,"/js/jquery.js")}"/>
+  <apex:includescript value="{!URLFOR($Resource.jqueryjs,"/js/jquery.simplemodal.js")}"/>
+   <apex:includescript value="{!URLFOR($Resource.jqueryjs,"/js/osx.js")}"/>
+   <apex:includescript value="{!URLFOR($Resource.jqueryjs,"/js/jquery-1.7.2.min.js")}"/>
+   
+    
+   
+   
+
+
+   
+<apex:form id="Theform1" >
+ 
+
+ 
+<div id="holder" style="width:940px; margin:0px auto; border:1px solid #75b9fe;">
+    
+  <div> <apex:pageMessages ></apex:pageMessages> </div>
+  
+  <div style="width:940px;">
+      <p>
+       <span> Personal Information    </span>
+      </p>
+      <ul>
+       
+        <li>
+          <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top">&nbsp;</td>
+    <td align="center" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30" align="left" valign="middle">Prefix</td>
+        <td height="30" align="left" valign="middle"><apex:inputFIeld value="{!QR_AttendeeSummary__c.Attendee_NewPrefix__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">First Name</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_FirstName__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Last Name</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_LastName__c}" /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Suffix</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_NewSuffix__c}"    /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Email</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_EmailId__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Company</td>
+        <td height="30" align="left" valign="middle"> <apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Company__c}"/></td>
+      </tr>
+    </table></td>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30" align="left" valign="middle">Designation</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Designation__c}"/></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Mobile Number</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_CellPhoneNumber__c}"/></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Age</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Age__c}"    /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">Gender</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Gender__c}"    /></td>
+        </tr>
+      <tr>
+        <td height="30" align="left" valign="middle">DOB</td>
+        <td height="30" align="left" valign="middle"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_BirthDate__c}" onclick="swapYears,getYears"/></td>
+        </tr>
+        
+        
+           <tr>
+        <td height="30" align="left" valign="top">Registration Type</td>
+        <td height="30" align="left" valign="middle">
+        
+        
+        <apex:outputField value="{!QR_AttendeeSummary__c.Attendee_Registration_Type__c}"/>
+    <!--    
+    <apex:inputhidden value="{!QR_AttendeeSummary__c.Attendee_Registration_type__c }"/>
+     <apex:inputCheckbox value="{!RegValu0}"/>&nbsp;Full Convention<br />
+            <apex:inputCheckbox value="{!RegValu1}"/>&nbsp;Reception<br />
+            <apex:inputCheckbox value="{!RegValu2}"/>&nbsp;Tuesday Pass<br />
+        
+       --> 
+        
+        
+        
+        </td>
+        </tr>
+        
+        
+    </table></td>
+  </tr>
+</table>
+        </li>
+        
+        
+      </ul>
+    </div>
+  
+  
+  
+  
+  
+  
+  <div style="width:100%; margin-top:20px;">
+      <p>
+        <span>Business Information</span>
+      </p>
+      <ul>
+       
+        <li>
+          <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="50%" align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="50%" height="30" align="left" valign="middle">&nbsp;</td>
+        <td width="50%" height="30" align="left" valign="middle">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30">Primary Business Category</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_PrimaryBusinessCategory1__c}" /></td>
+        </tr>
+      <tr>
+        <td height="30">Secondary Business Category</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_SecondaryBusinessCategory2__c}"   /></td>
+        </tr>
+        <tr>
+        <td height="30">Diversity Type</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_DiversityType1__c}"  /></td>
+        </tr>
+      <tr>
+        <td height="30">Number Of Employees</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Business_NoOfEmployees__c}"   /></td>
+        </tr>
+     
+      <tr>
+        <td height="30">Business Established Date</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_BusineesEstablished_Date1__c}" onclick="swapYears,getYears"  /></td>
+        </tr>
+      <tr>
+        <td height="30">Business Revenue</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_NewBusinessRevenue__c}"/> $ </td>
+        </tr>
+    </table></td>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="50%" height="30" align="left" valign="middle">&nbsp;</td>
+        <td width="50%" height="30" align="left" valign="middle">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30">Business TaxId</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_BusinessTaxId__c}"   style="widht:220px;"  /></td>
+        </tr>
+     
+      <tr>
+        <td height="30">Business DunsNumber</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Business_DnB_Id__c}"  style="widht:220px;"   /></td>
+        </tr>
+      <tr>
+        <td height="30">Website URL</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_WebsiteURL__c}"   style="widht:235px;"  /></td>
+        </tr>
+      <tr>
+        <td height="30">Blog URL</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_BlogURL__c}"  style="widht:235px;" /></td>
+        </tr>
+      <tr>
+        <td height="30">Business Description</td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.New_Business_Description__c}" style="width:230px;"   /></td>
+        </tr>
+        
+      <!--  <apex:inputHidden value="{!QR_AttendeeSummary__c.AS_DiversityType__c}"/>
+          <apex:inputHidden value="{!QR_AttendeeSummary__c.AS_DiversityType__c}"/>
+            <apex:inputHidden value="{!QR_AttendeeSummary__c.AS_DiversityType__c}"/>
+        
+        
+        -->
+        <tr>
+         <td colspan="2" align="center">
+             &nbsp;
+         </td>
+     </tr>
+        
+        
+    </table></td>
+  </tr>
+</table>
+<!--
+<table border="0" cellspacing="0" cellpadding="0" align="center" width="98%">
+<tr>
+    <td colspan="6" style="padding-left:15px;" bgcolor="#f3f3f3" height="30px;">Diversity Type</td>
+</tr>
+<tr><td height="35px">
+    <apex:inputCheckbox value="{!Select0}" style="padding:5px;"/>&nbsp;&nbsp;Minority Owned Business Enterprise</td>
+    <td height="35px"><apex:inputCheckbox value="{!Select1}"/>&nbsp;&nbsp;Disadvantaged Business Enterprise</td>
+    <td height="35px"><apex:inputCheckbox value="{!Select2}"/>&nbsp;&nbsp;Service Disabled Veteran Business Enterprise</td></tr>
+    <tr><td height="35px"><apex:inputCheckbox value="{!Select3}"/>&nbsp;&nbsp;Small Business Enterprise</td>
+    <td><apex:inputCheckbox value="{!Select4}"/>&nbsp;&nbsp;Ability One</td>
+    <td><apex:inputCheckbox value="{!Select5}"/>&nbsp;&nbsp;Woman Owned Business Enterprise</td></tr>
+    <tr><td height="35px"><apex:inputCheckbox value="{!Select6}"/>&nbsp;&nbsp;SBA 8(A) Program</td>
+    <td><apex:inputCheckbox value="{!Select7}"/>&nbsp;&nbsp;Veteran Owned Business Enterprise</td>
+    <td><apex:inputCheckbox value="{!Select8}"/>&nbsp;&nbsp;Lesbian Gay Bisexual Transgender Business</td></tr>
+    <tr><td height="35px"><apex:inputCheckbox value="{!Select9}"/>&nbsp;&nbsp;Alaskan Native Corporation Owned Firm</td>
+    <td><apex:inputCheckbox value="{!Select10}"/>&nbsp;&nbsp;Small Disadvantaged Business</td>
+    <td><apex:inputCheckbox value="{!Select11}"/>&nbsp;&nbsp;Historically Underutilized Business Zone</td></tr>
+    <tr><td height="35px"><apex:inputCheckbox value="{!Select12}"/>&nbsp;&nbsp;Disabled Business Enterprise</td>
+    <td><apex:inputCheckbox value="{!Select13}"/>&nbsp;&nbsp;Historically Black Colleges And Universities</td>
+    <td><apex:inputCheckbox value="{!Select14}"/>&nbsp;&nbsp;SELF-CERTIFIED SMALL DISADVANTAGED BUSINESS
+</td>
+<apex:inputField value="{!QR_AttendeeSummary__c.Attendee_DiversityType__c}"/>
+</tr>    
+</table>-->
+        </li>
+        
+        
+      </ul>
+    </div>
+  
+  
+  
+    <div style="width:100%; margin-top:20px;">
+      <p>
+       <span> Business Address</span>
+      </p>
+      <ul>
+        <li>
+         <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px"> Phone Number</label></td>
+   
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_WorkPhone__c}"/>
+        </td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Adddress1</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_WorkAddress__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Adddress2</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_WorkAddress1__c}"   /></td>
+        </tr>
+    </table></td>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">City</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_Workcity__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">State</label></td>
+        <td height="30"><apex:selectList value="{!QR_AttendeeSummary__c.Attendee_NewWorkState__c}" size="1">
+        <apex:selectOptions value="{!Options}"></apex:selectOptions></apex:selectList>
+        
+       </td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Zip</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_WorkPOBox__c}"   /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+        </li>
+      </ul>
+    </div>
+    
+    
+    
+    
+    <div style="width:100%; margin-top:20px;">
+      <p>
+        <span>NAICS Information</span></p>
+      <ul>
+        
+        <li>
+         <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30">NAICS Code 1</td>
+        <td height="30"><span class="requiredInput">
+          <apex:inputText value="{!NaicsCode1}"  id="NAICS1"/>
+        </span></td>
+        </tr>
+      <tr>
+        <td height="30">NAICS Code 2</td>
+        <td height="30"><span class="requiredInput">
+          <apex:inputText value="{!NaicsCode2}"   id="NAICS2" />
+        </span></td>
+        </tr>
+      <tr>
+        <td height="30">NAICS Code 3</td>
+        <td height="30"><span class="requiredInput">
+          <apex:inputText value="{!NaicsCode3}"  id="NAICS3" />
+        </span></td>
+        </tr>
+    </table></td>
+    <td align="center" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+    <!--   <tr>
+       <td height="30">NAICS Code 4</td>
+        <td height="30"><span class="requiredInput">
+          <apex:inputField value="{!QR_AttendeeSummary__c.AS_NAICSCode4__c}"   />
+        </span></td>
+        </tr>
+      <tr>
+        <td height="30">NAICS Code 5</td>
+        <td height="30"><span class="requiredInput">
+          <apex:inputField value="{!QR_AttendeeSummary__c.AS_NAICSCode5__c}"   />
+        </span></td>
+        </tr>-->
+      <tr>
+        <td height="30">&nbsp;</td>
+        <td height="30">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+        </li>
+      </ul>
+    </div>
+    
+    
+    
+    
+  <div style="width:100%; margin-top:20px;">
+      <p>
+               <span>Shipping Address       </span>
+      </p>
+      <ul>
+       
+        <li>
+          <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      
+      <!--
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px"> Phone Number</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_CellPhoneNumber__c}"   /></td>
+        </tr>
+       --> 
+       
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Adddress1</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_ShippingAddress__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Adddress2</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_ShippingAddress2__c}"   /></td>
+        </tr>
+        
+        <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Zip</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_ShippingPOBox__c}"  /></td>
+        </tr>
+    </table></td>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">City</label></td>
+        <td height="30"><apex:inputField value="{!QR_AttendeeSummary__c.Attendee_shippingCity__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">State</label></td>
+        <td height="30">
+        <apex:selectList value="{!QR_AttendeeSummary__c.Attendee_NewshippingState__c}" size="1">
+        <apex:selectOptions value="{!Options}"></apex:selectOptions></apex:selectList>
+        </td>
+        </tr>
+      
+        
+        <!--
+        <apex:inputHidden value="{!QR_AttendeeSummary__c.Attendee_FirstName__c}" />
+        
+         <apex:inputHidden value="{!QR_AttendeeSummary__c.Attendee_LastName__c}"  />
+        
+        -->
+    </table></td>
+  </tr>
+</table>
+        </li>
+      </ul>
+    </div>
+    
+    
+    
+    
+    
+    
+    <div style="width:100%; margin-top:20px; margin-bottom:10px;">
+      <p>
+              <span> Home Address       </span>
+      </p>
+      <ul>
+        <li>
+          <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px"> Phone Number</label></td>
+        <td height="30"><apex:inputText value="{!QR_AttendeeSummary__c.Attendee_HomePhoneNumber__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Adddress1</label></td>
+        <td height="30"><apex:inputText value="{!QR_AttendeeSummary__c.Attendee_HomeAddress__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Adddress2</label></td>
+        <td height="30"><apex:inputText value="{!QR_AttendeeSummary__c.Attendee_HomeAddress1__c}"   /></td>
+        </tr>
+    </table></td>
+    <td width="50%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="30">&nbsp;</td>
+        <td width="50%" height="30">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">City</label></td>
+        <td height="30"><apex:inputText value="{!QR_AttendeeSummary__c.Attendee_HomeCity__c}"   /></td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">State</label></td>
+        <td height="30">
+        <apex:selectList value="{!QR_AttendeeSummary__c.Attendee_NewHomeState__c}" size="1">
+        <apex:selectOptions value="{!Options}"></apex:selectOptions></apex:selectList>
+        </td>
+        </tr>
+      <tr>
+        <td height="30"><label style="color:Black; padding-left:20px; height:50px">Zip</label></td>
+        <td height="30"><apex:inputText value="{!QR_AttendeeSummary__c.Attendee_HomePOBox__c}"    /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+        </li>
+        
+      </ul>
+    </div>
+    
+    <div style="text-align:right; padding-right:15px;">
+ 
+ <apex:commandButton value="Submit" action="{!Submit}" styleclass="awesome" style="margin:5px;" onclick="return ValidateNaics();" />
+ 
+ &nbsp;
+ <apex:commandButton value="Reset" styleclass="awesome"  style="margin:5px;" onClick="resetForm();" />
+ 
+ &nbsp;
+ <apex:commandButton value="Cancel" styleclass="awesome"  style="margin:5px;" action="{!UpdateProfile1}" />
+ 
+ <br />
+ </div>
+</div>
+ 
+ 
+
+ 
+<apex:outputPanel id="Eventpopup1">
+<apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!out_variable}"/>
+<apex:outputPanel styleClass="custPopup" layout="block" rendered="{!out_variable}" style="width:80%;">
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+    <td height="40px" bgcolor="#75b9fe" style="padding-left:20px;"><h2>Dear {!QR_AttendeeSummary__c.Attendee_FirstName__c} {!QR_AttendeeSummary__c.Attendee_LastName__c}</h2>
+    <div style="float:right;  padding-right:5px;"><apex:commandButton action="{!UpdateProfile1}" value="CONTINUE"  style="height:25px; width:Auto;" styleClass="awesome"  /> </div>
+    </td>
+</tr>
+    <tr>
+        <td style="padding-left:20px;"></td>
+    </tr>
+    <tr>
+        <td style="padding-left:20px;">
+        <pre style="font-family:arial">
+        Thank you for updating your profile!
+        
+        You have successfully expanded your horizon to reach potential customers.
+        If you would like to know more about Booth Leads, please visit our web site.
+
+        Thank you,
+        Boothleads.com
+        </pre>
+        </td>
+    </tr>
+   <!--
+    <tr>
+        <td style="padding-left:25px;">
+        <apex:commandButton value="CHECK"  action="{!check}"  title="Check" styleclass="awesome" style="margin:5px;"   />
+        </td>
+    </tr>
+    -->    
+</table>
+<br />
+
+
+
+
+
+
+
+</apex:outputPanel>
+ 
+ </apex:outputPanel>
+ 
+
+ 
+<apex:outputPanel id="EventInfo">
+
+<apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!eventInfo}"/>
+<apex:outputPanel styleClass="custPopup" layout="block" rendered="{!eventInfo}" style="width:80%;">
+
+
+
+
+
+
+<table width="100%" border="0" cellspacing="5" cellpadding="0">
+<tr>
+    <td colspan="2" height="40px" bgcolor="#75b9fe" align="center"><h3 style="color:#FFFFFF"><b>{!eventInformation.Event_Title__c}</b></h3> 
+    <div style="float:right;"><apex:commandButton action="{!EventClose}" value="CONTINUE" style="height:25px; width:Auto;" styleClass="awesome" /> </div>
+    </td>
+</tr>
+                                                                          
+ <!-- <tr>
+    <td width="50%" height="35" align="center" valign="middle"><apex:image URL="/servlet/servlet.FileDownload?file={!eventInformation.EV_EventLogo__c}" height="150" width="150"/></td>
+    <td width="50%" height="35" align="center" valign="middle">&nbsp;</td>
+  </tr>-->
+  <tr>
+    <td height="35" align="center" valign="top"><table width="90%" border="0" cellspacing="5" cellpadding="0" align="center">
+      <tr>
+        <td style="text-align:left;" width="50%" height="30" align="right" valign="middle">Description</td>
+        <td style="text-align:left;" width="50%" height="30" align="left" valign="middle">{!eventInformation.NewEvent_Details__c}</td>
+      </tr>
+      <tr>
+        <td style="text-align:left;" height="30" align="right" valign="middle">PrimaryCategory </td>
+        <td style="text-align:left;" height="30" align="left" valign="middle">{!eventInformation.Event_NewPrimaryCategory__c}</td>
+      </tr>
+      <tr>
+        <td style="text-align:left;" height="30" align="right" valign="middle">Start Date</td>
+        <td style="text-align:left;" height="30" align="left" valign="middle">{!eventInformation.Start_Date__c} {!eventInformation.Start_Time__c}</td>
+      </tr>
+      <tr>
+        <td style="text-align:left;" height="30" align="right" valign="middle">Status</td>
+        <td style="text-align:left;" height="30" align="left" valign="middle">{!eventInformation.Event_Status1__c}</td>
+      </tr>
+      
+    </table></td>
+    <td height="35" align="center" valign="top"><table width="90%" border="0" cellspacing="5" cellpadding="0">
+      
+      <tr>
+        <td style="text-align:left;" height="30" align="right" valign="middle">HostingOrgName </td>
+        <td style="text-align:left;" height="30" align="left" valign="middle">{!eventInformation.Event_HostingOrganization__c}</td>
+      </tr>
+      <tr>
+        <td  height="30" align="left" valign="middle"> SecondaryCategory</td>
+        <td height="30" align="left" valign="middle">{!eventInformation.Event_Newsecondarycategory__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30" valign="middle">End date</td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.End_Date__c} {!eventInformation.End_Time__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30" valign="middle">Website URL</td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.Event_WebsiteURL__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30"  valign="middle">&nbsp;</td>
+        <td align="left" height="30"  valign="middle">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="35" colspan="2" align="left" valign="middle" bgcolor="#75b9fe" style="padding-left:15px"><h2>Location Details</h2></td>
+  </tr>
+  <tr>
+    <td height="35" align="center" valign="top"><table width="90%" border="0" cellspacing="5px" cellpadding="0" align="center">
+      <tr>
+        <td align="left" width="50%" height="30"  valign="middle">HostingTimeZone </td>
+        <td align="left" width="50%" height="30"  valign="middle">{!eventInformation.Event_HostingTimeZone__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30"  valign="middle">HistingAddr1 </td>
+        <td align="left" height="30" valign="middle">{!eventInformation.Event_HostingAddress1__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30"  valign="middle">HostingCity </td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.Event_HostingCity__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30"  valign="middle">HostingState</td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.Event_HostingNewState__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30"  valign="middle">HostingZipcode</td>
+        <td align="left" height="30" valign="middle">{!eventInformation.Event_ZipCode__c}</td>
+      </tr>
+    </table></td>
+    <td height="35" align="center" valign="top"><table width="90%" border="0" cellspacing="5" cellpadding="0" align="center">
+      <tr>
+        <td align="left" width="50%" height="30"  valign="middle">HostingLocation</td>
+        <td align="left" width="50%" height="30"  valign="middle">{!eventInformation.Event_HostingLocation__c}</td>
+      </tr>
+      <tr>
+        <td align="left" height="30"  valign="middle">HostingAddr2</td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.Event_HostingAddress2__c}</td>
+      </tr>
+      <tr>
+        <td  align="left" height="30" valign="middle">HostingPhone</td>
+        <td align="left" height="30" valign="middle">{!eventInformation.Event_PhoneNumber__c}</td>
+      </tr>
+     <!-- <tr>
+        <td align="left" height="30"  valign="middle">HostingCountry</td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.EV_HostingCountry__c}</td>
+      </tr>-->
+      <tr>
+        <td align="left" height="30"  valign="middle">HostingFax</td>
+        <td align="left" height="30"  valign="middle">{!eventInformation.Event_FaxNumber__c}</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+
+
+<br />
+
+
+</apex:outputPanel>
+ 
+ </apex:outputPanel>
+ 
+ 
+ 
+ 
+        
+ 
+ <apex:outputPanel id="Eventpopup">
+<apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!welcomeNote}"/>
+<apex:outputPanel styleClass="custPopup" layout="block" rendered="{!welcomeNote}" style="width:80%;">
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+    <td height="40px" bgcolor="#75b9fe" style="padding-left:20px;"><h2>Dear {!QR_AttendeeSummary__c.Attendee_FirstName__c} {!QR_AttendeeSummary__c.Attendee_LastName__c}</h2>
+    <div style="float:right;  padding-right:5px;"><apex:commandButton action="{!UpdateProfile}" value="CONTINUE"  style="height:25px; width:Auto;" styleClass="awesome"  /> </div>
+    </td>
+</tr>
+    <tr>
+        <td style="padding-left:20px;"></td>
+    </tr>
+    <tr>
+        <td style="padding-left:20px;">
+    <pre style="font-family:arial"> 
+    
+     Welcome to BoothLeads!
+     
+     Please Update Your Profile by going through all the tabs in the form.
+     Updating profile will give you an opportunity to provide your up to date contact 
+     and business information to reach potential customers  in need of your products and services.
+
+     If you have any questions please contact your Event Administrator.
+
+     Thank you!
+     BoothLeads customer support
+     <font color="blue">support@boothleads.com</font>
+    </pre>
+
+        </td>
+    </tr>
+
+</table>
+<br />
+
+
+</apex:outputPanel>
+ 
+ </apex:outputPanel>
+ 
+ 
+ </apex:form>
+ <apex:include id="footer" pageName="QRCode_Footertemplate"/>
+ 
+       <script  type="text/javascript">
+
+       function ValidateNaics(){
+    
+       
+       var naicsDigit = document.getElementById("ThePage:Theform1:NAICS1").value;
+       var naicsDigit1 = document.getElementById("ThePage:Theform1:NAICS2").value;
+       var naicsDigit2 = document.getElementById("ThePage:Theform1:NAICS3").value;
+       
+       
+       if(naicsDigit.length>6){
+       alert('Please Enter Valid 6 number NAICS code');
+       document.getElementById("ThePage:Theform1:NAICS1").focus();
+        return false;   
+       }
+    
+        if(naicsDigit1.length>6){
+        alert('Please Enter Valid 6 number NAICS code');
+        document.getElementById("ThePage:Theform1:NAICS2").focus();
+         return false;   
+       }
+       
+       
+       if(naicsDigit2.length>6){
+       alert('Please Enter Valid 6 number NAICS code');
+       document.getElementById("ThePage:Theform1:NAICS3").focus();
+          return false;   
+       }
+       
+       }   
+ 
+
+
+     </script>
+    
+    
+    
+</apex:page>

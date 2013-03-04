@@ -1,0 +1,25 @@
+<apex:page renderAs="pdf" controller="sample2">
+<font  face="TimesNewRoman" color="RED" style="font-size:15pt;padding:0px;margin:0px;">
+      <p align="center">  Please Print and bring this Badge to the event </p>
+</font><br/><br/>
+<apex:repeat value="{!details}" var="a">
+<table>
+<tr><td width="50%"></td>
+<td align="center">
+<apex:outputpanel rendered="{!logo}">
+<apex:image url="/servlet/servlet.FileDownload?file={!attach.id}" width="125px" height="100px"/>
+</apex:outputpanel>
+</td></tr>
+<tr><td width="50%"></td>
+ <td align="center">
+{!a.Attendee_FirstName__c} {!a.Attendee_LastName__c}
+</td></tr>
+<tr><td width="50%">
+<apex:image value="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl={!x}"/>
+</td>
+<td>
+{!a.Attendee_Company__c}
+</td></tr>
+</table>
+</apex:repeat>
+</apex:page>

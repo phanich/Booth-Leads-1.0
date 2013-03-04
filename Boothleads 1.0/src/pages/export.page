@@ -1,0 +1,8 @@
+<apex:page showHeader="false" controller="exportBoothpersonnelsandattendees" contentType="text/csv#EventAttendees.csv"> First Name,Last Name,Email Id,cell phone number,Home Phone Number,Work Phone Number,
+ 
+<apex:repeat value="{!listOfAttendees}" var="att">
+ {!att.Attendee_FirstName__c},{!att.Attendee_LastName__c},{!att.Attendee_EmailId__c},{!att.Attendee_CellPhoneNumber__c},{!att.Attendee_HomePhoneNumber__c},{!att.Attendee_WorkPhone__c }
+</apex:repeat> 
+
+
+</apex:page>

@@ -1,0 +1,142 @@
+<apex:page sidebar="false" showHeader="false"  controller="GNEMSDCBoothVisitSummaryCon" tabStyle="Account" standardStylesheets="false">
+ 
+ <script>
+//window.onload=myFunction;
+function myFunction()
+{
+setTimeout(function(){ bps();myFunction();},10000);
+}
+</script>
+ 
+ <style>
+.logobutton {
+-moz-box-shadow: inset 0px 1px 0px 0px #bbdaf7;
+-webkit-box-shadow: inset 0px 1px 0px 0px #BBDAF7;
+box-shadow: inset 0px 1px 0px 0px #BBDAF7;
+background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79BBFF), 
+
+color-stop(1, #378DE5) );
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', 
+
+endColorstr='#378de5');
+background-color: #79BBFF;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+cursor: pointer;
+border-radius: 15px;
+
+border: 4px solid #84BBF3;
+width:70px;
+height:20px;
+
+
+display: inline-block;
+color: white;
+font-family: Trebuchet MS;
+
+font-size: 10pt;
+
+font-weight: bold;
+
+padding: 0px 5px 18px 5px; 
+text-align: center;
+
+text-decoration: none;
+
+text-shadow: 1px 1px 0px #1B4A7A;
+}
+
+
+.contentBox {
+display:block;
+position:absolute;
+padding-right:20px;
+top:0px;
+left:620px;
+border-width: 0px;
+border-style: solid;
+border-color: 000;
+padding:5px;
+margin-top:5px;
+margin-right:300px;
+width:350px;
+height:500px;
+overflow:scroll;
+
+}
+
+.headerclass{
+background-color:#0e9ecf;
+text-align:left;
+height:40px;
+border-bottom:1px solid Black;
+padding-left:5px;
+}
+
+.headerclass2{
+background-color:#33B5D2;
+text-align:left;
+height:40px;
+border-bottom:1px solid Black;
+padding-left:5px;
+}
+
+
+
+.even{
+background-color:#FFFFFF;
+}
+.odd{
+background-color:#EBEBEB;
+}
+
+</style>
+
+
+Total Booth Personnel :{!totalBoothPersonnels}  &nbsp;&nbsp;&nbsp;&nbsp;  Total Scanned Attendees:{!TotalScannedAttendees}
+
+
+
+
+<apex:form id="theForm">
+
+
+
+ <table width="100%" border="0"><tr><td width="60%" valign="top">
+  <apex:dataTable value="{!inn}" var="e" rowClasses="even,odd" width="100%" style="border:1px solid black">
+   <apex:column headerValue="Booth Personnel Name" value="{!e.innerstr}" headerClass="headerclass2" style="height:30px;"> </apex:column>
+   
+   <apex:column headerValue="Booth Personnel Email" headerClass="headerclass2">{!e.innerEmail}</apex:column>
+   
+   <apex:column headerValue="No of Scans" headerClass="headerclass2">
+   <apex:commandLink value="{!e.innerintvalue}" action="{!showScannedAttendees}" reRender="theForm">
+   <apex:param value="{!e.innerEmail}" name="boothpersonnelValue"/></apex:commandLink></apex:column>
+   
+ </apex:dataTable>
+ 
+ </td>
+ 
+ 
+ 
+ <td valign="top"> 
+ 
+ <apex:outputPanel id="outPanel" rendered="{!outBool}">
+   <apex:dataTable value="{!attendeesList}" var="h" width="100%" rowClasses="even,odd" style="border:1px solid black">
+     <apex:column headerValue="Name" headerClass="headerclass" style="height:30px;">{!h.Attendee_FirstName__c}{!h.Attendee_LastName__c }</apex:column>
+     <apex:column headerValue="Email" headerClass="headerclass">{!h.Attendee_EmailId__c}</apex:column> 
+    </apex:dataTable> <br />
+   <div style="float:right;"> <apex:commandButton value="close" action="{!close}" reRender="theForm" styleClass="logobutton"/></div>
+ </apex:outputPanel> 
+
+
+ </td>
+ 
+ </tr>
+ 
+ 
+ </table>
+ 
+ <apex:actionFunction name="bps" action="{!boothPersonnels}" reRender="theForm"/>
+ 
+</apex:form>
+</apex:page>

@@ -1,0 +1,38 @@
+<apex:page showHeader="false" controller="exportBoothpersonnelsandattendees">
+ <style>
+
+.even{
+background-color:#FFFFFF;
+}
+.odd{
+background-color:#EBEBEB;
+
+}.headerclass{
+background-color:#0e9ecf;
+text-align:left;
+height:40px;
+border-bottom:1px solid Black;
+padding-left:5px;
+}
+</style>
+  <apex:form > <p />
+ <b>Selct Event:</b>&nbsp; &nbsp; <apex:selectList value="{!selectedEvent}" size="1" multiselect="false">
+    <apex:selectOptions value="{!options}"/>
+    <apex:actionSupport event="onchange" action="{!getEventAttendees}"/>
+    </apex:selectList> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <apex:outputPanel rendered="{!resderExport}"> <apex:commandButton value="Export" action="{!export}"/></apex:outputPanel>  <br /><br /><br />
+  
+  <apex:dataTable value="{!listOfAttendees}" var="att" rowClasses="even,odd" width="100%">
+   <apex:column value="{!att.Attendee_FirstName__c}" headerValue="First Name" headerClass="headerclass" style="height:30px;padding-left:10px;"/>
+   <apex:column value="{!att.Attendee_LastName__c}" headerValue="Last Name" headerClass="headerclass" style="height:30px;"/>
+   <apex:column value="{!att.Attendee_EmailId__c}" headerValue="Email" headerClass="headerclass" style="height:30px;"/>
+   <apex:column value="{!att.Attendee_CellPhoneNumber__c}" headerValue="Cell phone Number" headerClass="headerclass" style="height:30px;"/>
+   <apex:column value="{!att.Attendee_HomePhoneNumber__c}" headerValue="Home Phone Number" headerClass="headerclass" style="height:30px;"/>
+   <apex:column value="{!att.Attendee_WorkPhone__c }" headerValue="Work Phone Number" headerClass="headerclass" style="height:30px;"/>
+       <apex:column value="{!att.LastModifiedDate}" headerValue="Last Modified Date" headerClass="headerclass" style="height:30px;"/>
+  </apex:dataTable>
+  
+  
+  
+  </apex:form>
+   
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page contentType="application/csv#BoothTemplate.csv" cache="true" showheader="fase" language="en-US" controller="QRcode_BoothAdminImportCon">
+
+    <apex:outputText value="First Name,Last Name,Email Id,Organization Name,Organization Phone Number,Organization Fax Number,Organization Website URL,Organization Address1, Organization Address2,Organization City,Organization State,Organization Zip Code,Organization PO Box,Organization Description"/>
+  
+</apex:page>
